@@ -111,6 +111,56 @@ public class Filter {
         return lessOrEqualTo(value.doubleValue());
     }
 
+    // =====================================================================
 
+    public static IntPredicate greaterThan(int value) {
+        return i -> i > value;
+    }
+
+    public static LongPredicate greaterThan(long value) {
+        return i -> i > value;
+    }
+
+    public static DoublePredicate greaterThan(double value) {
+        return i -> i > value;
+    }
+
+    public static IntPredicate greaterThan(Integer value) {
+        return greaterThan(value.intValue());
+    }
+
+    public static LongPredicate greaterThan(Long value) {
+        return greaterThan(value.longValue());
+    }
+
+    public static DoublePredicate greaterThan(Double value) {
+        return greaterThan(value.doubleValue());
+    }
+
+    // =====================================================================
+
+    public static IntPredicate greaterOrEqualTo(int value) {
+        return i -> i >= value;
+    }
+
+    public static LongPredicate greaterOrEqualTo(long value) {
+        return i -> i >= value;
+    }
+
+    public static DoublePredicate greaterOrEqualTo(double value) {
+        return i -> i >= value;
+    }
+
+    public static IntPredicate greaterOrEqualTo(Integer value) {
+        return greaterOrEqualTo(value.intValue());
+    }
+
+    public static LongPredicate greaterOrEqualTo(Long value) {
+        return greaterOrEqualTo(value.longValue());
+    }
+
+    public static DoublePredicate greaterOrEqualTo(Double value) {
+        return greaterOrEqualTo(value.doubleValue());
+    }
 
 }
