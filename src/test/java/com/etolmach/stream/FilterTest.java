@@ -179,5 +179,88 @@ public class FilterTest {
         assertFalse(lessOrEqualTo(Double.valueOf(10.0)).test(12.0));
     }
 
-    
+    @Test
+    public void greaterThanInt() {
+        assertFalse(greaterThan(10).test(8));
+        assertFalse(greaterThan(10).test(10));
+        assertTrue(greaterThan(10).test(12));
+    }
+
+    @Test
+    public void greaterThanLong() {
+        assertFalse(greaterThan(10L).test(8));
+        assertFalse(greaterThan(10L).test(10));
+        assertTrue(greaterThan(10L).test(12));
+    }
+
+    @Test
+    public void greaterThanDouble() {
+        assertFalse(greaterThan(10.0).test(8.0));
+        assertFalse(greaterThan(10.0).test(10.0));
+        assertTrue(greaterThan(10.0).test(12.0));
+    }
+
+    @Test
+    public void greaterThanIntObject() {
+        assertFalse(greaterThan(Integer.valueOf(10)).test(8));
+        assertFalse(greaterThan(Integer.valueOf(10)).test(10));
+        assertTrue(greaterThan(Integer.valueOf(10)).test(12));
+    }
+
+    @Test
+    public void greaterThanLongObject() {
+        assertFalse(greaterThan(Long.valueOf(10L)).test(8));
+        assertFalse(greaterThan(Long.valueOf(10L)).test(10));
+        assertTrue(greaterThan(Long.valueOf(10L)).test(12));
+    }
+
+    @Test
+    public void greaterThanDoubleObject() {
+        assertFalse(greaterThan(Double.valueOf(10.0)).test(8.0));
+        assertFalse(greaterThan(Double.valueOf(10.0)).test(10.0));
+        assertTrue(greaterThan(Double.valueOf(10.0)).test(12.0));
+    }
+
+    @Test
+    public void greaterOrEqualToInt() {
+        assertFalse(greaterOrEqualTo(10).test(8));
+        assertTrue(greaterOrEqualTo(10).test(10));
+        assertTrue(greaterOrEqualTo(10).test(12));
+    }
+
+    @Test
+    public void greaterOrEqualToLong() {
+        assertFalse(greaterOrEqualTo(10L).test(8));
+        assertTrue(greaterOrEqualTo(10L).test(10));
+        assertTrue(greaterOrEqualTo(10L).test(12));
+    }
+
+    @Test
+    public void greaterOrEqualToDouble() {
+        assertFalse(greaterOrEqualTo(10.0).test(8.0));
+        assertTrue(greaterOrEqualTo(10.0).test(10.0));
+        assertTrue(greaterOrEqualTo(10.0).test(12.0));
+    }
+
+    @Test
+    public void greaterOrEqualToIntObject() {
+        assertFalse(greaterOrEqualTo(Integer.valueOf(10)).test(8));
+        assertTrue(greaterOrEqualTo(Integer.valueOf(10)).test(10));
+        assertTrue(greaterOrEqualTo(Integer.valueOf(10)).test(12));
+    }
+
+    @Test
+    public void greaterOrEqualToLongObject() {
+        assertFalse(greaterOrEqualTo(Long.valueOf(10L)).test(8));
+        assertTrue(greaterOrEqualTo(Long.valueOf(10L)).test(10));
+        assertTrue(greaterOrEqualTo(Long.valueOf(10L)).test(12));
+    }
+
+    @Test
+    public void greaterOrEqualToDoubleObject() {
+        assertFalse(greaterOrEqualTo(Double.valueOf(10.0)).test(8.0));
+        assertTrue(greaterOrEqualTo(Double.valueOf(10.0)).test(10.0));
+        assertTrue(greaterOrEqualTo(Double.valueOf(10.0)).test(12.0));
+    }
+
 }
