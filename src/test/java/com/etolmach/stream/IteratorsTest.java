@@ -10,8 +10,8 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
-import static com.etolmach.stream.Iterate.decrementingBy;
-import static com.etolmach.stream.Iterate.incrementingBy;
+import static com.etolmach.stream.Iterators.decrementingBy;
+import static com.etolmach.stream.Iterators.incrementingBy;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
@@ -20,39 +20,39 @@ import static org.junit.Assert.fail;
 /**
  * @author Evgeniy Tolmach
  */
-public class IterateTest {
+public class IteratorsTest {
 
     @Test
     public void testIncrementingByInt() {
-        assertOperatorWorks(incrementingBy(2), 0, 2, 4, 6, 8, 10);
+        assertIteratingOperatorWorks(incrementingBy(2), 0, 2, 4, 6, 8, 10);
     }
 
     @Test
     public void testIncrementingByLong() {
-        assertOperatorWorks(incrementingBy(2L), 0L, 2L, 4L, 6L, 8L, 10L);
+        assertIteratingOperatorWorks(incrementingBy(2L), 0L, 2L, 4L, 6L, 8L, 10L);
     }
 
     @Test
     public void testIncrementingByDouble() {
-        assertOperatorWorks(incrementingBy(2.0), 0.0, 2.0, 4.0, 6.0, 8.0, 10.0);
+        assertIteratingOperatorWorks(incrementingBy(2.0), 0.0, 2.0, 4.0, 6.0, 8.0, 10.0);
     }
 
     @Test
     public void testDecrementingByInt() {
-        assertOperatorWorks(decrementingBy(2), 8, 6, 4, 2);
+        assertIteratingOperatorWorks(decrementingBy(2), 8, 6, 4, 2);
     }
 
     @Test
     public void testDecrementingByLong() {
-        assertOperatorWorks(decrementingBy(2L), 8L, 6L, 4L, 2L);
+        assertIteratingOperatorWorks(decrementingBy(2L), 8L, 6L, 4L, 2L);
     }
 
     @Test
     public void testDecrementingByDouble() {
-        assertOperatorWorks(decrementingBy(2.0), 8.0, 6.0, 4.0, 2.0);
+        assertIteratingOperatorWorks(decrementingBy(2.0), 8.0, 6.0, 4.0, 2.0);
     }
 
-    private void assertOperatorWorks(Object operator, Object... expectedValues) {
+    private void assertIteratingOperatorWorks(Object operator, Object... expectedValues) {
         List<?> actual = null;
         if (operator instanceof IntUnaryOperator) {
             actual = generateList((Integer) expectedValues[0], (IntUnaryOperator) operator, expectedValues.length);
