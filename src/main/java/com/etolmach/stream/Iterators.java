@@ -7,7 +7,7 @@ import java.util.function.LongUnaryOperator;
 /**
  * @author Evgeniy Tolmach
  */
-public class Iterate {
+public class Iterators {
 
     public static IntUnaryOperator incrementingBy(int value) {
         return i -> i + value;
