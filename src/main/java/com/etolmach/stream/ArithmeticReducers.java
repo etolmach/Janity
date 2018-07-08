@@ -7,39 +7,37 @@ import java.util.function.LongBinaryOperator;
 
 /**
  * @author Evgeniy Tolmach
+ * @see java.util.function.BiFunction BiFunction
+ * @see java.util.function.BinaryOperator BinaryOperator
+ * @see java.util.function.IntBinaryOperator IntBinaryOperator
+ * @see java.util.function.LongBinaryOperator LongBinaryOperator
+ * @see java.util.function.DoubleBinaryOperator DoubleBinaryOperator
+ * @see java.util.stream.Stream#reduce(BinaryOperator) Stream.reduce(BinaryOperator)
  */
 public class ArithmeticReducers {
 
-    public static final IntBinaryOperator MULTIPLYING_PRIMITIVE_INTS = (x, y) -> x * y;
-    public static final LongBinaryOperator MULTIPLYING_PRIMITIVE_LONGS = (x, y) -> x * y;
-    public static final DoubleBinaryOperator MULTIPLYING_PRIMITIVE_DOUBLES = (x, y) -> x * y;
-
-    public static final BinaryOperator<Integer> MULTIPLYING_INTS = (x, y) -> x * y;
-    public static final BinaryOperator<Long> MULTIPLYING_LONGS = (x, y) -> x * y;
-    public static final BinaryOperator<Double> MULTIPLYING_DOUBLES = (x, y) -> x * y;
-
     public static IntBinaryOperator multiplyingPrimitiveInts() {
-        return MULTIPLYING_PRIMITIVE_INTS;
+        return (x, y) -> x * y;
     }
 
     public static LongBinaryOperator multiplyingPrimitiveLongs() {
-        return MULTIPLYING_PRIMITIVE_LONGS;
+        return (x, y) -> x * y;
     }
 
     public static DoubleBinaryOperator multiplyingPrimitiveDoubles() {
-        return MULTIPLYING_PRIMITIVE_DOUBLES;
+        return (x, y) -> x * y;
     }
 
     public static BinaryOperator<Integer> multiplyingInts() {
-        return MULTIPLYING_INTS;
+        return (x, y) -> x * y;
     }
 
     public static BinaryOperator<Long> multiplyingLongs() {
-        return MULTIPLYING_LONGS;
+        return (x, y) -> x * y;
     }
 
     public static BinaryOperator<Double> multiplyingDoubles() {
-        return MULTIPLYING_DOUBLES;
+        return (x, y) -> x * y;
     }
 
     public static IntBinaryOperator summingPrimitiveInts() {
