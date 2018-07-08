@@ -8,7 +8,7 @@ import static java.util.Arrays.stream;
 /**
  * @author Evgeniy Tolmach
  */
-public class ArithmeticComparators {
+public class ArithmeticPredicates {
 
     public static IntPredicate factorOf(int dividend) {
         return divider -> dividend % divider == 0;
