@@ -1,13 +1,15 @@
-package com.etolmach.stream;
+package com.etolmach.stream.comparators;
 
-import java.util.function.DoublePredicate;
-import java.util.function.IntPredicate;
-import java.util.function.LongPredicate;
+import java.util.Objects;
+import java.util.function.*;
+
+import static com.etolmach.stream.mappers.Mappers.applyTo;
+import static java.util.Arrays.stream;
 
 /**
  * @author Evgeniy Tolmach
  */
-public class Filter {
+public class Comparators {
 
     public static IntPredicate equalsTo(int value) {
         return i -> i == value;
@@ -33,7 +35,26 @@ public class Filter {
         return equalsTo(value.doubleValue());
     }
 
-    // =====================================================================
+    public static Predicate equalsTo(Object object) {
+        return o -> Objects.equals(o, object);
+    }
+
+    public static IntPredicate equalsTo(IntSupplier supplier) {
+        return i -> i == supplier.getAsInt();
+    }
+
+    public static LongPredicate equalsTo(LongSupplier supplier) {
+        return i -> i == supplier.getAsLong();
+    }
+
+    public static DoublePredicate equalsTo(DoubleSupplier supplier) {
+        return i -> i == supplier.getAsDouble();
+    }
+
+    public static Predicate equalsTo(Supplier supplier) {
+        return o -> Objects.equals(o, supplier.get());
+    }
+
 
     public static IntPredicate notEqualsTo(int value) {
         return i -> i != value;
@@ -161,6 +182,82 @@ public class Filter {
 
     public static DoublePredicate greaterOrEqualTo(Double value) {
         return greaterOrEqualTo(value.doubleValue());
+    }
+
+    // =====================================================================
+
+    public static <R> IntPredicate resultsAreEqual(IntFunction<R> function, IntFunction<R>... targetFunctions) {
+        return i -> {
+            R value = function.apply(i);
+            return stream(targetFunctions)
+                    .map(applyTo(i))
+                    .allMatch(equalsTo(value));
+        };
+    }
+
+    public static <R> LongPredicate resultsAreEqual(LongFunction<R> function, LongFunction<R>... targetFunctions) {
+        return l -> {
+            R value = function.apply(l);
+            return stream(targetFunctions)
+                    .map(applyTo(l))
+                    .allMatch(equalsTo(value));
+        };
+    }
+
+    public static <R> DoublePredicate resultsAreEqual(DoubleFunction<R> function, DoubleFunction<R>... targetFunctions) {
+        return d -> {
+            R value = function.apply(d);
+            return stream(targetFunctions)
+                    .map(applyTo(d))
+                    .allMatch(equalsTo(value));
+        };
+    }
+
+    public static <T, R> Predicate<T> resultsAreEqual(Function<T, R> function, Function<T, R>... targetFunctions) {
+        return t -> {
+            R value = function.apply(t);
+            return stream(targetFunctions)
+                    .map(applyTo(t))
+                    .allMatch(equalsTo(value));
+        };
+    }
+
+    // =====================================================================
+
+    public static <R> IntPredicate resultsAreNotEqual(IntFunction<R> function, IntFunction<R>... targetFunctions) {
+        return i -> {
+            R value = function.apply(i);
+            return stream(targetFunctions)
+                    .map(applyTo(i))
+                    .noneMatch(equalsTo(value));
+        };
+    }
+
+    public static <R> LongPredicate resultsAreNotEqual(LongFunction<R> function, LongFunction<R>... targetFunctions) {
+        return l -> {
+            R value = function.apply(l);
+            return stream(targetFunctions)
+                    .map(applyTo(l))
+                    .noneMatch(equalsTo(value));
+        };
+    }
+
+    public static <R> DoublePredicate resultsAreNotEqual(DoubleFunction<R> function, DoubleFunction<R>... targetFunctions) {
+        return d -> {
+            R value = function.apply(d);
+            return stream(targetFunctions)
+                    .map(applyTo(d))
+                    .noneMatch(equalsTo(value));
+        };
+    }
+
+    public static <T, R> Predicate<T> resultsAreNotEqual(Function<T, R> function, Function<T, R>... targetFunctions) {
+        return t -> {
+            R value = function.apply(t);
+            return stream(targetFunctions)
+                    .map(applyTo(t))
+                    .noneMatch(equalsTo(value));
+        };
     }
 
 }
