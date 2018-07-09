@@ -7,15 +7,15 @@ import java.util.function.Predicate;
  */
 public class StringPredicates {
 
-    public static Predicate<String> startsWith(String prefix) {
+    public static Predicate<String> startingWith(String prefix) {
         return s -> s.startsWith(prefix);
     }
 
-    public static Predicate<String> startsWith(String prefix, int offset) {
+    public static Predicate<String> startingWith(String prefix, int offset) {
         return s -> s.startsWith(prefix, offset);
     }
 
-    public static Predicate<String> endsWith(String suffix) {
+    public static Predicate<String> endingWith(String suffix) {
         return s -> s.endsWith(suffix);
     }
 
