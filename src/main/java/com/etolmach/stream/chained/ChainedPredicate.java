@@ -1,4 +1,4 @@
-package com.etolmach.stream.chained.predicates;
+package com.etolmach.stream.chained;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -50,7 +50,7 @@ public class ChainedPredicate<T> implements Predicate<T> {
 
     public static class Where<T, R> extends AbstractChain<T, R> {
 
-        Where(Function<T, R> mapper) {
+        public Where(Function<T, R> mapper) {
             super(mapper);
         }
 

@@ -24,4 +24,8 @@ public interface StreamDsl {
         return new Switch.WhenIs<>(predicate);
     }
 
+    static <T> Switch.Typed<T> typedSwitch(Class<T> typed) {
+        return new Switch.Typed<>(typed);
+    }
+
 }
