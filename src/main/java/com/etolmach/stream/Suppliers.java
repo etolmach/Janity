@@ -5,7 +5,7 @@ import java.util.function.*;
 /**
  * @author Evgeniy Tolmach
  */
-public class NestedSuppliers {
+public class Suppliers {
 
     public static Supplier<Boolean> boxed(BooleanSupplier supplier) {
         return supplier::getAsBoolean;
@@ -24,7 +24,7 @@ public class NestedSuppliers {
     }
 
     public static BooleanSupplier unboxedBoolean(Supplier<Boolean> supplier) {
-        return supplier.get()::booleanValue;
+        return supplier::get;
     }
 
     public static IntSupplier unboxedInt(Supplier<Number> supplier) {
@@ -49,6 +49,10 @@ public class NestedSuppliers {
 
     public static Supplier<Double> asDouble(Supplier<Number> supplier) {
         return boxed(unboxedDouble(supplier));
+    }
+
+    public static <T, R> Supplier<R> mapped(Supplier<T> supplier, Function<T, R> mapper) {
+        return () -> mapper.apply(supplier.get());
     }
 
 }
