@@ -35,15 +35,19 @@ public class CastMappers {
     }
 
     public static Function<Number, Integer> toInt() {
-        return value -> value.intValue();
+        return number -> number.intValue();
     }
 
     public static Function<Number, Long> toLong() {
-        return value -> value.longValue();
+        return number -> number.longValue();
     }
 
     public static Function<Number, Double> toDouble() {
-        return value -> value.doubleValue();
+        return number -> number.doubleValue();
+    }
+
+    public static <T, R> Function<T, R> to(Class<R> type) {
+        return type::cast;
     }
 
 }
