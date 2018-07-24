@@ -105,4 +105,29 @@ public class ArithmeticPredicates {
     public static LongPredicate isOddLong() {
         return dividend -> (dividend & 1L) != 0;
     }
+
+    public static IntPredicate isPositiveInt() {
+        return i -> i > 0;
+    }
+
+    public static IntPredicate isPositiveLong() {
+        return i -> i > 0;
+    }
+
+    public static IntPredicate isPositiveDouble() {
+        return i -> i > 0;
+    }
+
+    public static IntPredicate isNegativeInt() {
+        return i -> i < 0;
+    }
+
+    public static IntPredicate isNegativeLong() {
+        return i -> i < 0;
+    }
+
+    public static IntPredicate isNegativeDouble() {
+        return i -> i < 0;
+    }
+
 }
