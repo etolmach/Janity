@@ -3,61 +3,80 @@ package com.etolmach.stream.comparators;
 import java.util.Objects;
 import java.util.function.*;
 
-import static com.etolmach.stream.comparators.Predicates.not;
 import static com.etolmach.stream.mappers.Mappers.applyTo;
 import static java.util.Arrays.stream;
 
 /**
  * @author Evgeniy Tolmach
  */
-public class Comparators {
+public class PrimitiveComparators {
 
-    public static IntPredicate equalTo(int value) {
+    public static IntPredicate equalsTo(int value) {
         return i -> i == value;
     }
 
-    public static LongPredicate equalTo(long value) {
+    public static LongPredicate equalsTo(long value) {
         return i -> i == value;
     }
 
-    public static DoublePredicate equalTo(double value) {
+    public static DoublePredicate equalsTo(double value) {
         return i -> i == value;
     }
 
-    public static <T> Predicate<T> equalTo(T t) {
+    public static IntPredicate equalsTo(Integer value) {
+        return equalsTo(value.intValue());
+    }
+
+    public static LongPredicate equalsTo(Long value) {
+        return equalsTo(value.longValue());
+    }
+
+    public static DoublePredicate equalsTo(Double value) {
+        return equalsTo(value.doubleValue());
+    }
+
+    public static <T> Predicate<T> equalsTo(T t) {
         return o -> Objects.equals(o, t);
     }
 
-    public static IntPredicate equalTo(IntSupplier supplier) {
+    public static IntPredicate equalsTo(IntSupplier supplier) {
         return i -> i == supplier.getAsInt();
     }
 
-    public static LongPredicate equalTo(LongSupplier supplier) {
+    public static LongPredicate equalsTo(LongSupplier supplier) {
         return i -> i == supplier.getAsLong();
     }
 
-    public static DoublePredicate equalTo(DoubleSupplier supplier) {
+    public static DoublePredicate equalsTo(DoubleSupplier supplier) {
         return i -> i == supplier.getAsDouble();
     }
 
-    public static <T> Predicate<T> equalTo(Supplier<T> supplier) {
+    public static <T> Predicate<T> equalsTo(Supplier<T> supplier) {
         return o -> Objects.equals(o, supplier.get());
     }
 
-    public static IntPredicate notEqualTo(int value) {
-        return not(equalTo(value));
-    }
-
-    public static LongPredicate notEqualTo(long value) {
+    public static IntPredicate notEqualsTo(int value) {
         return i -> i != value;
     }
 
-    public static DoublePredicate notEqualTo(double value) {
+    public static LongPredicate notEqualsTo(long value) {
         return i -> i != value;
     }
 
-    public static <T> Predicate<T> notEqualTo(Supplier<T> supplier) {
-        return equalTo(supplier).negate();
+    public static DoublePredicate notEqualsTo(double value) {
+        return i -> i != value;
+    }
+
+    public static IntPredicate notEqualsTo(Integer value) {
+        return notEqualsTo(value.intValue());
+    }
+
+    public static LongPredicate notEqualsTo(Long value) {
+        return notEqualsTo(value.longValue());
+    }
+
+    public static DoublePredicate notEqualsTo(Double value) {
+        return notEqualsTo(value.doubleValue());
     }
 
     // =====================================================================
@@ -74,8 +93,16 @@ public class Comparators {
         return i -> i < value;
     }
 
-    public static <T extends Comparable> Predicate<T> lessThan(T o) {
-        return t -> t.compareTo(o) < 0;
+    public static IntPredicate lessThan(Integer value) {
+        return lessThan(value.intValue());
+    }
+
+    public static LongPredicate lessThan(Long value) {
+        return lessThan(value.longValue());
+    }
+
+    public static DoublePredicate lessThan(Double value) {
+        return lessThan(value.doubleValue());
     }
 
     // =====================================================================
@@ -118,8 +145,8 @@ public class Comparators {
         return i -> i > value;
     }
 
-
-    public static <T extends Comparable> Predicate<T> greaterThan(T o) {
+    // TODO: refactor other comparators
+    public static <T extends Comparable> Predicate<T> greaterThan(Object o) {
         return t -> t.compareTo(o) > 0;
     }
 
@@ -168,7 +195,7 @@ public class Comparators {
             R value = functions[0].apply(i);
             return stream(functions, 1, functions.length)
                     .map(applyTo(i))
-                    .allMatch(equalTo(value));
+                    .allMatch(equalsTo(value));
 
         };
     }
@@ -178,7 +205,7 @@ public class Comparators {
             R value = function.apply(l);
             return stream(targetFunctions)
                     .map(applyTo(l))
-                    .allMatch(equalTo(value));
+                    .allMatch(equalsTo(value));
         };
     }
 
@@ -187,18 +214,8 @@ public class Comparators {
             R value = function.apply(d);
             return stream(targetFunctions)
                     .map(applyTo(d))
-                    .allMatch(equalTo(value));
+                    .allMatch(equalsTo(value));
         };
     }
-
-    public static <T, R> Predicate<T> resultsAreEqual(Function<T, R> function, Function<T, R>... targetFunctions) {
-        return t -> {
-            R value = function.apply(t);
-            return stream(targetFunctions)
-                    .map(applyTo(t))
-                    .allMatch(equalTo(value));
-        };
-    }
-
 
 }
