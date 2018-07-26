@@ -1,15 +1,19 @@
-package com.etolmach.stream;
+package com.etolmach.stream.comparators;
 
 import org.junit.Test;
 
-import static com.etolmach.stream.Filter.*;
+import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
+
+import static com.etolmach.stream.comparators.PrimitiveComparators.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
  * @author Evgeniy Tolmach
  */
-public class FilterTest {
+public class PrimitiveComparatorsTest {
 
     @Test
     public void equalsToInt() {
@@ -34,23 +38,66 @@ public class FilterTest {
 
     @Test
     public void equalsToIntObject() {
-        assertFalse(equalsTo(Integer.valueOf(10)).test(8));
-        assertTrue(equalsTo(Integer.valueOf(10)).test(10));
-        assertFalse(equalsTo(Integer.valueOf(10)).test(12));
+        Integer ten = Integer.valueOf(10);
+        assertFalse(equalsTo(ten).test(8));
+        assertTrue(equalsTo(ten).test(10));
+        assertFalse(equalsTo(ten).test(12));
     }
 
     @Test
     public void equalsToLongObject() {
-        assertFalse(equalsTo(Long.valueOf(10L)).test(8));
-        assertTrue(equalsTo(Long.valueOf(10L)).test(10));
-        assertFalse(equalsTo(Long.valueOf(10L)).test(12));
+        Long ten = Long.valueOf(10L);
+        assertFalse(equalsTo(ten).test(8));
+        assertTrue(equalsTo(ten).test(10));
+        assertFalse(equalsTo(ten).test(12));
     }
 
     @Test
     public void equalsToDoubleObject() {
-        assertFalse(equalsTo(Double.valueOf(10.0)).test(8.0));
-        assertTrue(equalsTo(Double.valueOf(10.0)).test(10.0));
-        assertFalse(equalsTo(Double.valueOf(10.0)).test(12.0));
+        Double ten = Double.valueOf(10.0);
+        assertFalse(equalsTo(ten).test(8.0));
+        assertTrue(equalsTo(ten).test(10.0));
+        assertFalse(equalsTo(ten).test(12.0));
+    }
+
+    @Test
+    public void equalsToAnObject() {
+        Double ten = Double.valueOf(10.0);
+        assertFalse(equalsTo(ten).test(8.0));
+        assertTrue(equalsTo(ten).test(10.0));
+        assertFalse(equalsTo(ten).test(12.0));
+//        assertFalse(equalTo(new PrimitiveComparatorsTest()).test(12.0));
+    }
+
+    @Test
+    public void equalsToIntFromSupplier() {
+        IntSupplier supplier = () -> 10;
+        assertFalse(equalsTo(supplier).test(8));
+        assertTrue(equalsTo(supplier).test(10));
+        assertFalse(equalsTo(supplier).test(12));
+    }
+
+    @Test
+    public void equalsToLongFromSupplier() {
+        LongSupplier supplier = () -> 10L;
+        assertFalse(equalsTo(supplier).test(8L));
+        assertTrue(equalsTo(supplier).test(10L));
+        assertFalse(equalsTo(supplier).test(12L));
+    }
+
+    @Test
+    public void equalsToDoubleFromSupplier() {
+        DoubleSupplier supplier = () -> 10.0;
+        assertFalse(equalsTo(supplier).test(8.0));
+        assertTrue(equalsTo(supplier).test(10.0));
+        assertFalse(equalsTo(supplier).test(12.0));
+    }
+
+    @Test
+    public void equalsToAnObjectFromSupplier() {
+        PrimitiveComparatorsTest object = new PrimitiveComparatorsTest();
+        assertFalse(Comparators.equalTo(() -> object).test(new PrimitiveComparatorsTest()));
+        assertTrue(Comparators.equalTo(() -> object).test(object));
     }
 
     @Test
@@ -76,23 +123,26 @@ public class FilterTest {
 
     @Test
     public void notEqualsToIntObject() {
-        assertTrue(notEqualsTo(Integer.valueOf(10)).test(8));
-        assertFalse(notEqualsTo(Integer.valueOf(10)).test(10));
-        assertTrue(notEqualsTo(Integer.valueOf(10)).test(12));
+        Integer ten = Integer.valueOf(10);
+        assertTrue(notEqualsTo(ten).test(8));
+        assertFalse(notEqualsTo(ten).test(10));
+        assertTrue(notEqualsTo(ten).test(12));
     }
 
     @Test
     public void notEqualsToLongObject() {
-        assertTrue(notEqualsTo(Long.valueOf(10L)).test(8));
-        assertFalse(notEqualsTo(Long.valueOf(10L)).test(10));
-        assertTrue(notEqualsTo(Long.valueOf(10L)).test(12));
+        Long ten = Long.valueOf(10L);
+        assertTrue(notEqualsTo(ten).test(8));
+        assertFalse(notEqualsTo(ten).test(10));
+        assertTrue(notEqualsTo(ten).test(12));
     }
 
     @Test
     public void notEqualsToDoubleObject() {
-        assertTrue(notEqualsTo(Double.valueOf(10.0)).test(8.0));
-        assertFalse(notEqualsTo(Double.valueOf(10.0)).test(10.0));
-        assertTrue(notEqualsTo(Double.valueOf(10.0)).test(12.0));
+        Double ten = Double.valueOf(10.0);
+        assertTrue(notEqualsTo(ten).test(8.0));
+        assertFalse(notEqualsTo(ten).test(10.0));
+        assertTrue(notEqualsTo(ten).test(12.0));
     }
 
     @Test
@@ -262,5 +312,4 @@ public class FilterTest {
         assertTrue(greaterOrEqualTo(Double.valueOf(10.0)).test(10.0));
         assertTrue(greaterOrEqualTo(Double.valueOf(10.0)).test(12.0));
     }
-
 }
