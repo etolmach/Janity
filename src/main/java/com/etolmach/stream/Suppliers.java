@@ -27,15 +27,15 @@ public class Suppliers {
         return supplier::get;
     }
 
-    public static IntSupplier unboxedInt(Supplier<Number> supplier) {
+    public static <T extends Number> IntSupplier unboxedInt(Supplier<T> supplier) {
         return supplier.get()::intValue;
     }
 
-    public static LongSupplier unboxedLong(Supplier<Number> supplier) {
+    public static <T extends Number> LongSupplier unboxedLong(Supplier<T> supplier) {
         return supplier.get()::longValue;
     }
 
-    public static DoubleSupplier unboxedDouble(Supplier<Number> supplier) {
+    public static <T extends Number> DoubleSupplier unboxedDouble(Supplier<T> supplier) {
         return supplier.get()::doubleValue;
     }
 
