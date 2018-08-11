@@ -27,7 +27,12 @@ public class ChainedPredicate<T> implements Predicate<T> {
 
     @Override
     public ChainedPredicate<T> and(Predicate<? super T> other) {
-        return new ChainedPredicate<>(predicate);
+        return new ChainedPredicate<>(predicate.and(other));
+    }
+
+    @Override
+    public ChainedPredicate<T> or(Predicate<? super T> other) {
+        return new ChainedPredicate<>(predicate.or(other));
     }
 
     public <R> And<T, R> and(Function<T, R> extractor) {
