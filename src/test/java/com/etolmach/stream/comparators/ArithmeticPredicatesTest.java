@@ -7,9 +7,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.etolmach.stream.comparators.ArithmeticPredicates.*;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.divisibleBy;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.divisibleByAny;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.factorOf;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.factorOfAny;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.isEvenInt;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.isEvenLong;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.isOddInt;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.isOddLong;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.notDivisibleBy;
+import static com.etolmach.stream.comparators.ArithmeticPredicates.notFactorOf;
 import static com.etolmach.stream.mappers.ArithmeticMappers.primitiveModulo;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Evgeniy Tolmach
@@ -19,11 +31,18 @@ public class ArithmeticPredicatesTest {
     @Test
     public void testFactorOfInt() {
         assertTrue(factorOf(10).test(5));
+
+        assertThat(factorOf(10))
+                .accepts(1, 2, 5)
+                .rejects(3, 4, 6);
+
     }
 
     @Test
     public void testFactorOfInts() {
-        assertTrue(factorOf(10, 25).test(5));
+        assertThat(factorOf(100, 250))
+                .accepts(2, 5, 10, 25, 50)
+                .rejects(3, 4, 6, 11, 12, 13);
     }
 
     @Test
@@ -142,7 +161,6 @@ public class ArithmeticPredicatesTest {
 
     @Test
     public void compoundTest() {
-
         List<Integer> list = IntStream.range(1, 100)
                 // [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 25, 30, 50, 60, 75]
                 .filter(factorOf(900, 1200))
@@ -156,5 +174,4 @@ public class ArithmeticPredicatesTest {
                 .collect(Collectors.toList());
         assertEquals(Arrays.asList(1, 5), list);
     }
-
 }
