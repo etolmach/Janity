@@ -1,7 +1,16 @@
 package com.etolmach.stream.comparators;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.BiPredicate;
+import java.util.function.DoublePredicate;
+import java.util.function.DoubleSupplier;
+import java.util.function.Function;
+import java.util.function.IntPredicate;
+import java.util.function.IntSupplier;
+import java.util.function.LongPredicate;
+import java.util.function.LongSupplier;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.stream;
@@ -11,12 +20,52 @@ import static java.util.Arrays.stream;
  */
 public class Predicates {
 
-    public static <T> Predicate<T> considerTrue() {
-        return t -> true;
+    public static IntPredicate consideringIntAs(boolean flag) {
+        return t -> flag;
     }
 
-    public static <T> Predicate<T> considerFalse() {
-        return t -> false;
+    public static LongPredicate consideringLongAs(boolean flag) {
+        return t -> flag;
+    }
+
+    public static DoublePredicate consideringDoubleAs(boolean flag) {
+        return t -> flag;
+    }
+
+    public static <T> Predicate<T> consideringAs(boolean flag) {
+        return t -> flag;
+    }
+
+    public static IntPredicate consideringIntAsTrue() {
+        return consideringIntAs(true);
+    }
+
+    public static LongPredicate consideringLongAsTrue() {
+        return consideringLongAs(true);
+    }
+
+    public static DoublePredicate consideringDoubleAsTrue() {
+        return consideringDoubleAs(true);
+    }
+
+    public static <T> Predicate<T> consideringAsTrue() {
+        return consideringAs(true);
+    }
+
+    public static IntPredicate consideringIntAsFalse() {
+        return consideringIntAs(false);
+    }
+
+    public static LongPredicate consideringLongAsFalse() {
+        return consideringLongAs(false);
+    }
+
+    public static DoublePredicate consideringDoubleAsFalse() {
+        return consideringDoubleAs(false);
+    }
+
+    public static <T> Predicate<T> consideringAsFalse() {
+        return consideringAs(false);
     }
 
     public static IntPredicate not(IntPredicate predicate) {
@@ -142,6 +191,5 @@ public class Predicates {
     public static <T> Predicate<T> none(Predicate<T>... predicates) {
         return value -> predicateStream(predicates).noneMatch(trueFor(value));
     }
-
 
 }
