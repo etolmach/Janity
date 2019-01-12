@@ -4,11 +4,14 @@ import static java.util.Arrays.stream;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.DoubleFunction;
 import java.util.function.DoublePredicate;
 import java.util.function.DoubleSupplier;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
+import java.util.function.LongFunction;
 import java.util.function.LongPredicate;
 import java.util.function.LongSupplier;
 import java.util.function.Predicate;
@@ -222,6 +225,22 @@ public class Predicates {
 
     public static <T> Predicate<T> none(Predicate<T>... predicates) {
         return value -> predicateStream(predicates).noneMatch(trueFor(value));
+    }
+
+    public static <R> IntPredicate having(IntFunction<R> function, Predicate<R> predicate) {
+        return value -> predicate.test(function.apply(value));
+    }
+
+    public static <R> LongPredicate having(LongFunction<R> function, Predicate<R> predicate) {
+        return value -> predicate.test(function.apply(value));
+    }
+
+    public static <R> DoublePredicate having(DoubleFunction<R> function, Predicate<R> predicate) {
+        return value -> predicate.test(function.apply(value));
+    }
+
+    public static <T, R> Predicate<T> having(Function<T, R> function, Predicate<R> predicate) {
+        return value -> predicate.test(function.apply(value));
     }
 
 }
