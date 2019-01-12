@@ -144,6 +144,22 @@ public class Predicates {
         return stream(predicates).map(Objects::requireNonNull);
     }
 
+    public static IntPredicate both(IntPredicate first, IntPredicate second) {
+        return all(first, second);
+    }
+
+    public static LongPredicate both(LongPredicate first, LongPredicate second) {
+        return all(first, second);
+    }
+
+    public static DoublePredicate both(DoublePredicate first, DoublePredicate second) {
+        return all(first, second);
+    }
+
+    public static <T> Predicate<T> both(Predicate<T> first, Predicate<T> second) {
+        return all(first, second);
+    }
+
     public static IntPredicate all(IntPredicate... predicates) {
         return value -> predicateStream(predicates).allMatch(trueFor(value));
     }
