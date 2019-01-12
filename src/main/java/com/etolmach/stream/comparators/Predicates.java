@@ -1,5 +1,7 @@
 package com.etolmach.stream.comparators;
 
+import static java.util.Arrays.stream;
+
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.DoublePredicate;
@@ -12,8 +14,6 @@ import java.util.function.LongSupplier;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-
-import static java.util.Arrays.stream;
 
 /**
  * @author Evgeniy Tolmach
@@ -174,6 +174,22 @@ public class Predicates {
 
     public static <T> Predicate<T> all(Predicate<T>... predicates) {
         return value -> predicateStream(predicates).allMatch(trueFor(value));
+    }
+
+    public static IntPredicate either(IntPredicate first, IntPredicate second) {
+        return any(first, second);
+    }
+
+    public static LongPredicate either(LongPredicate first, LongPredicate second) {
+        return any(first, second);
+    }
+
+    public static DoublePredicate either(DoublePredicate first, DoublePredicate second) {
+        return any(first, second);
+    }
+
+    public static <T> Predicate<T> either(Predicate<T> first, Predicate<T> second) {
+        return any(first, second);
     }
 
     public static IntPredicate any(IntPredicate... predicates) {
