@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.function.DoublePredicate;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -17,14 +18,17 @@ public class Predicates_both_Test {
     private static IntPredicate INT_GREATER_THAN_ONE = i -> i > 1;
     private static LongPredicate LONG_GREATER_THAN_ONE = i -> i > 1;
     private static DoublePredicate DOUBLE_GREATER_THAN_ONE = i -> i > 1;
+    private static Predicate<Integer> GREATER_THAN_ONE = i -> i > 1;
 
     private static IntPredicate INT_EQUAL_TO_0 = i -> i == 0;
     private static LongPredicate LONG_EQUAL_TO_0 = i -> i == 0;
     private static DoublePredicate DOUBLE_EQUAL_TO_0 = i -> i == 0;
+    private static Predicate<Integer> EQUAL_TO_0 = i -> i == 0;
 
     private static IntPredicate INT_EQUAL_TO_3 = i -> i == 3;
     private static LongPredicate LONG_EQUAL_TO_3 = i -> i == 3;
     private static DoublePredicate DOUBLE_EQUAL_TO_3 = i -> i == 3;
+    private static Predicate<Integer> EQUAL_TO_3 = i -> i == 3;
 
     @Test
     public void should_reject_integers_when_first_rejects() {
@@ -144,6 +148,46 @@ public class Predicates_both_Test {
                         DOUBLE_EQUAL_TO_3
                    )
         ).accepts(3.0);
+    }
+
+    @Test
+    public void should_reject_objects_when_first_rejects() {
+        assertThat(
+                   both(
+                        GREATER_THAN_ONE,
+                        EQUAL_TO_0
+                   )
+        ).rejects(0, -1, -23, -456, -789);
+    }
+
+    @Test
+    public void should_reject_objects_when_second_rejects() {
+        assertThat(
+                   both(
+                        GREATER_THAN_ONE,
+                        EQUAL_TO_3
+                   )
+        ).rejects(2, 23, 456, 789);
+    }
+
+    @Test
+    public void should_reject_objects_when_both_reject() {
+        assertThat(
+                   both(
+                        GREATER_THAN_ONE,
+                        EQUAL_TO_3
+                   )
+        ).rejects(-1, -23, -456, -789);
+    }
+
+    @Test
+    public void should_accept_objects_when_both_accept() {
+        assertThat(
+                   both(
+                        GREATER_THAN_ONE,
+                        EQUAL_TO_3
+                   )
+        ).accepts(3);
     }
 
 }
