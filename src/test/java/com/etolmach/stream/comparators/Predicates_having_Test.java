@@ -1,14 +1,18 @@
 package com.etolmach.stream.comparators;
 
 import static com.etolmach.stream.comparators.Predicates.having;
-import static com.etolmach.stream.comparators.StringPredicates.startingWith;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-import org.junit.Before;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
+import java.util.function.Predicate;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 /**
@@ -17,32 +21,90 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class Predicates_having_Test {
 
-    public static final String PREFIX = "F";
-    public static final String VALID_NAME = "Foo";
-    public static final String INVALID_NAME = "Bar";
-    @Mock
-    private User validUser;
-    @Mock
-    private User invalidUser;
+    private static final int INT_INPUT = 123;
+    private static final long LONG_INPUT = 4567;
+    private static final double DOUBLE_INPUT = 8.9011;
 
-    @Before
-    public void setUp() {
-        Mockito.when(validUser.getName()).thenReturn(VALID_NAME);
-        Mockito.when(invalidUser.getName()).thenReturn(INVALID_NAME);
+    @Mock
+    private Object input;
+    @Mock
+    private Object output;
+    @Mock
+    private Predicate<Object> predicate;
+
+    @Mock
+    private IntFunction<Object> intFunction;
+    @Mock
+    private LongFunction<Object> longFunction;
+    @Mock
+    private DoubleFunction<Object> doubleFunction;
+    @Mock
+    private Function<Object, Object> function;
+
+    @Test
+    public void should_accept_int_when_function_returns_valid_result() {
+        when(intFunction.apply(INT_INPUT)).thenReturn(output);
+        when(predicate.test(output)).thenReturn(true);
+
+        assertThat(having(intFunction, predicate)).accepts(INT_INPUT);
     }
 
     @Test
-    public void should_reject_object_with_non_matching_field() {
-        assertThat(having(User::getName, startingWith(PREFIX))).rejects(invalidUser);
+    public void should_reject_int_when_function_returns_invalid_result() {
+        when(intFunction.apply(INT_INPUT)).thenReturn(output);
+        when(predicate.test(output)).thenReturn(false);
+
+        assertThat(having(intFunction, predicate)).rejects(INT_INPUT);
     }
 
     @Test
-    public void should_accept_object_with_matching_field() {
-        assertThat(having(User::getName, startingWith(PREFIX))).accepts(validUser);
+    public void should_accept_long_when_function_returns_valid_result() {
+        when(longFunction.apply(LONG_INPUT)).thenReturn(output);
+        when(predicate.test(output)).thenReturn(true);
+
+        assertThat(having(longFunction, predicate)).accepts(LONG_INPUT);
     }
 
-    private interface User {
-        String getName();
+    @Test
+    public void should_reject_long_when_function_returns_invalid_result() {
+        when(longFunction.apply(LONG_INPUT)).thenReturn(output);
+        when(predicate.test(output)).thenReturn(false);
+
+        assertThat(having(longFunction, predicate)).rejects(LONG_INPUT);
     }
+
+
+    @Test
+    public void should_accept_double_when_function_returns_valid_result() {
+        when(doubleFunction.apply(DOUBLE_INPUT)).thenReturn(output);
+        when(predicate.test(output)).thenReturn(true);
+
+        assertThat(having(doubleFunction, predicate)).accepts(DOUBLE_INPUT);
+    }
+
+    @Test
+    public void should_reject_double_when_function_returns_invalid_result() {
+        when(doubleFunction.apply(DOUBLE_INPUT)).thenReturn(output);
+        when(predicate.test(output)).thenReturn(false);
+
+        assertThat(having(doubleFunction, predicate)).rejects(DOUBLE_INPUT);
+    }
+
+    @Test
+    public void should_accept_object_when_function_returns_valid_result() {
+        when(function.apply(input)).thenReturn(output);
+        when(predicate.test(output)).thenReturn(true);
+
+        assertThat(having(function, predicate)).accepts(input);
+    }
+
+    @Test
+    public void should_reject_object_when_function_returns_invalid_result() {
+        when(function.apply(input)).thenReturn(output);
+        when(predicate.test(output)).thenReturn(false);
+
+        assertThat(having(function, predicate)).rejects(input);
+    }
+
 
 }
