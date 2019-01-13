@@ -195,6 +195,22 @@ public class Predicates {
         return any(first, second);
     }
 
+    public static IntPredicate neither(IntPredicate first, IntPredicate second) {
+        return none(first, second);
+    }
+
+    public static LongPredicate neither(LongPredicate first, LongPredicate second) {
+        return none(first, second);
+    }
+
+    public static DoublePredicate neither(DoublePredicate first, DoublePredicate second) {
+        return none(first, second);
+    }
+
+    public static <T> Predicate<T> neither(Predicate<T> first, Predicate<T> second) {
+        return none(first, second);
+    }
+
     public static IntPredicate any(IntPredicate... predicates) {
         return value -> predicateStream(predicates).anyMatch(trueFor(value));
     }
